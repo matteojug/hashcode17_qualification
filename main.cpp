@@ -52,8 +52,8 @@ vector<map<int,int> > rxc;
 
 set<int> changed;
 
-#define EXP (1./2) // FF=0|2
-//~ #define EXP (1./1)
+//~ #define EXP (1./3) // FF=0
+#define EXP (1./2) // FF=1|2|3
 
 int pq_cnt = 0;
 
@@ -140,10 +140,10 @@ int main(int argc, char *argv[]){
     // R: <<video,endpoint>,req#>
     for (int i = 0; i < R; i++){
         scanf("%d%d%d", &req[i].ff.ff, &req[i].ff.ss, &req[i].ss);
-        for (auto c : cc[req[i].ff.ss]){
-            mappa_del_coso[mp(c.ff, req[i].ff.ff)].insert(req[i].ff.ss);
-            nfsijfskjlg[req[i].ff.ss][mp(c.ff, req[i].ff.ff)] += req[i].ss;
-        }
+        //~ for (auto c : cc[req[i].ff.ss]){
+            //~ mappa_del_coso[mp(c.ff, req[i].ff.ff)].insert(req[i].ff.ss);
+            //~ nfsijfskjlg[req[i].ff.ss][mp(c.ff, req[i].ff.ff)] += req[i].ss;
+        //~ }
     }
     output.resize(C);
     rxc.resize(C);
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]){
     while (cnt){
         update_scores();
         cnt = 0;
-        priority_queue<pair<int,ii> > pqq;
+        priority_queue<pair<double,ii> > pqq;
         for (int i = 0; i < C; i++){
             if (pq[i].empty()) continue;
             cnt++;
@@ -165,15 +165,16 @@ int main(int argc, char *argv[]){
         while (!pqq.empty()){
             auto t = pqq.top(); pqq.pop();
             if (video_taken[t.ss.ss]){
-                int sh = shared(video_taken[t.ss.ss], t.ss.ff, t.ss.ss);
-                cout<<(sh / max(0.00001f,(float)t.ff))<<endl;
-                if ((sh / max(0.00001f,(float)t.ff)) < 0.01)
-                    video_taken[t.ss.ss] = 0;
-                else
+                //~ int sh = shared(video_taken[t.ss.ss], t.ss.ff, t.ss.ss);
+                //~ cout<<sh<<","<<t.ff<<"\t"<<sh/max(abs(t.ff),0.0001)<<endl;
+                //~ if (sh /max(abs(t.ff),0.0001) < 0.00001)
+                    //~ cout<<"\tOver!"<<endl,
+                    //~ video_taken[t.ss.ss] = 0;
+                //~ else
                 if (!pq[t.ss.ff].empty()){
                     auto tt = pq[t.ss.ff].top();
                     //~ cout<<"@"<<t.ff/tt.ff<<endl;
-                    if (t.ff/tt.ff > 2){
+                    if (t.ff/tt.ff > 5){
                         video_taken[t.ss.ss] = 0;
                     } else {
                         pq[t.ss.ff].pop();
