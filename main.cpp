@@ -81,7 +81,7 @@ void update_scores(){
                 lat = min(lat, c.ss);
         for (auto c : cc[r.ff.ss]){
             //~ cout<<c.ff<<","<<r.ff.ff<<endl;
-            rxc[c.ff][r.ff.ff] += (lat-c.ss)*r.second;
+            rxc[c.ff][r.ff.ff] += max(0,(lat-c.ss))*r.second;
         }
     }
     
@@ -108,7 +108,7 @@ int shared(int c1, int c2, int v){
 }
 
 int main(int argc, char *argv[]){
-    int FUCKING_FILE = 0;
+    int FUCKING_FILE = 3;
     if (argc == 1){
         if (FUCKING_FILE == 0)
             freopen("me_at_the_zoo.in","r",stdin);
